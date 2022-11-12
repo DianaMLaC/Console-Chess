@@ -15,7 +15,9 @@ class Pawn < Piece
     end
     
 
-    # we also need to check if the possition is not out of the board
+    # we also need to check if the possition is not out of the board 
+    # same as valid or ocuppied by opposite colour
+    # but we leave this here for now, as the pawn is different from other pieces in attack way ... TBC
 
     def forward_moves # only if those pos is empty
         if @board.is_empty?(self.pos) && @board.pos_valid?(self.pos)

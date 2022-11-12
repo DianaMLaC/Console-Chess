@@ -12,7 +12,7 @@ class Piece
     end
 
     def colour_dir
-        self.colour == :white ? return 1 : return -1 
+        self.colour == :white ? return -1 : return 1 
     end
 
 #     def moves
