@@ -2,7 +2,7 @@ require_relative '../piece.rb'
 
 class King < Piece
     
-    def initialize(start_pos, colour)
+    def initialize(board, start_pos, colour, symbol)
         super(start_pos, colour, :K)
     end
 end

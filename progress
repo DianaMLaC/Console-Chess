@@ -4,10 +4,13 @@ Board:
     set the col, row as position given by the player -----the end_pos
     set the @grid[row][col] as position read by the computer ------the start_pos
     checked if a position is empty
+    checks if a possition is valid ( in the grid)
+    
 
 Pieces
     Piece is initialized with position and colour
     Each piece inherits position and colour and has its own unique symbol
+    Added available moves for pieces: Pawn, Rook
     
 
 Game 

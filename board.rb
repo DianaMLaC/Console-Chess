@@ -22,25 +22,25 @@ class Board
     # WE need to place pieces on the board based on their colour position and piece like a human would
     # let's start row by row
     def place_white_row
-        @grid[7][0] = Rook.new(self, [0,7], :white, :R)
-        @grid[7][1] = Knight.new(self, [1,7], :white, :Kn)
-        @grid[7][2] = Bishop.new(self, [2,7], :white, :B)
-        @grid[7][3] = Queen.new(self, [3,7], :white, :Q)
-        @grid[7][4] = King.new(self, [4,7], :white, :K)
-        @grid[7][5] = Bishop.new(self, [5,7], :white, :B)
-        @grid[7][6] = Knight.new(self, [6,7], :white, :Kn)
-        @grid[7][7] = Rook.new(self, [7,7], :white, :R)
+        @grid[7][0] = Rook.new(self, [0,7], :white)
+        @grid[7][1] = Knight.new(self, [1,7], :white)
+        @grid[7][2] = Bishop.new(self, [2,7], :white)
+        @grid[7][3] = Queen.new(self, [3,7], :white)
+        @grid[7][4] = King.new(self, [4,7], :white)
+        @grid[7][5] = Bishop.new(self, [5,7], :white)
+        @grid[7][6] = Knight.new(self, [6,7], :white)
+        @grid[7][7] = Rook.new(self, [7,7], :white)
     end
 
     def place_black_row
-        @grid[0][0] = Rook.new(self, [0,0], :black, :R)
-        @grid[0][1] = Knight.new(self, [1,0], :black, :Kn)
-        @grid[0][2] = Bishop.new(self, [2,0], :black, :B)
-        @grid[0][3] = Queen.new(self, [3,0], :black, :Q)
-        @grid[0][4] = King.new(self, [4,0], :black, :K)
-        @grid[0][5] = Bishop.new(self, [5,0], :black, :B)
-        @grid[0][6] = Knight.new(self, [6,0], :black, :Kn)
-        @grid[0][7] = Rook.new(self, [7,0], :black, :R)
+        @grid[0][0] = Rook.new(self, [0,0], :black)
+        @grid[0][1] = Knight.new(self, [1,0], :black)
+        @grid[0][2] = Bishop.new(self, [2,0], :black)
+        @grid[0][3] = Queen.new(self, [3,0], :black)
+        @grid[0][4] = King.new(self, [4,0], :black)
+        @grid[0][5] = Bishop.new(self, [5,0], :black)
+        @grid[0][6] = Knight.new(self, [6,0], :black)
+        @grid[0][7] = Rook.new(self, [7,0], :black)
     end
 
     def place_black_pawns
@@ -74,42 +74,33 @@ class Board
         Board.place_black_pawns
     end
 
-    def empty?(pos)
+    def is_empty?(pos)
         col, row = pos
         if @grid[row][col] != :NullPiece
             return false
         end
         return true
     end
-    
-#     def move_piece(start_pos, end_pos)
-#         start_row = start_pos[1]
-#         start_col = start_pos[0]
-#         start_pos_of_piece = @grid[start_row][start_col]
-#         if start_pice.nil?
-#             raise "The is no piece at start position"
-#         end
 
-#         end_row = end_pos[1]
-#         end_col = end_pos[0]
+    def pos_valid?(pos)
+        col, row = pos
         
-#         if pos_valid?(end_pos) && is_valid_move?(start_pos, end_pos, piece)
-#             @grid[end_row][end_col] = @grid[start_row][start_col]
-#             @grid[start_row][start_col] = nil
-#         end
-#     end
+        if row < 0 || row > 7
+            raise "Invalid position"
+            return false
+        end
+        if col < 0 || col > 7)
+            raise "Invalid position"
+            return false
+        end
+    end
 
-#     def pos_valid?(pos)
-#         col, row = pos
-        
-#         if row < 0 || row > 7
-#             raise "Invalid position"
-#             return false
-#         end
-#         if col < 0 || col > 7)
-#             raise "Invalid position"
-#             return false
-#         end
+    def move_piece(piece)
+        # we take the piece's available moves , and we check if each one:
+        # is empty
+        # is valid(on the board)
+        # and we only consider those that are as a possible move
+    end
 
         
 #         if !@grid[row][col].nil? 

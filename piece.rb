@@ -4,10 +4,15 @@ require './game'
 class Piece
     attr_reader :pos, :colour, :symbol 
 
-    def initialize(start_pos, colour, symbol)
+    def initialize(board, start_pos, colour, symbol)
+        @board = board
         @pos = start_pos
         @colour = colour 
         @symbol = symbol
+    end
+
+    def colour_dir
+        self.colour == :white ? return 1 : return -1 
     end
 
 #     def moves
