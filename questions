@@ -1,0 +1,23 @@
+The position in the Piece class initialize, is inherited by all other pices subclasses.
+Does this mean it will be overwritten when creating an instance of the subclass e.g. instance of Rook?
+If Rook inherits from Pieces, we will have to pass in a symbol for colour - but there are two colours
+We also need to pass in the board which stands for the grid on which it sets itself on to
+And pos which are the coordonates where it the piece is set on the grid of the board INITIALLY
+
+HOW DO WE INITIALIZE AN INSTANCE OF THE PIECES CLASS? AND DO WE NEED TO INITIALZIE TWO, ONE FOR EACH COLOUR?
+
+If we initialize the pawns for the colour black and set them on the positions :
+[0, 6],[1,6],[2,6],[3,6],4,6],[5,6],[6,6],[7,6] that means they can only move forward with +1 on the row which will result in [7,0][7,1] etc
+
+
+moves
+what do I need for a pawn to move?
+- is it a valid move? 
+    is it in the grid? true
+    is it !empty? true 
+        is it of oposite colour true
+            put the piece of oposite colour in the player's bag
+            return true
+        end 
+        return false 
+    end

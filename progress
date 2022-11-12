@@ -1,0 +1,14 @@
+Board:
+    set the grid
+    Placed the Pieces
+    set the col, row as position given by the player -----the end_pos
+    set the @grid[row][col] as position read by the computer ------the start_pos
+    checked if a position is empty
+
+Pieces
+    Piece is initialized with position and colour
+    Each piece inherits position and colour and has its own unique symbol
+    
+
+Game 
+    keeps a hystory of moves for each piece as [Pice, colour, start_pos, end_pos] e.g. [:Kn, :white, [7,1], [5,2]]
