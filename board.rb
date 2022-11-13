@@ -98,6 +98,8 @@ class Board
     def move_piece(piece)
         # we take the piece's available moves , and we check if each one:
         # is empty
+            # checks if opposit colour for attack
+            # for pieces that cannot step over, we only consider positions from array  until those occupied
         # is valid(on the board)
         # and we only consider those that are as a possible move
     end

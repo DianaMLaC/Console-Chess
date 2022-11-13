@@ -6,7 +6,8 @@ class Rook < Piece
         super(start_pos, colour, :R)
     end
 
-
+    # Rook CAN'T step over other pieces
+    # available moves need to be checked if empty, valid, or opposite colour
     def available_moves
         available_moves = horizontal_moves + vertical_moves
     end

@@ -5,12 +5,14 @@ Board:
     set the @grid[row][col] as position read by the computer ------the start_pos
     checked if a position is empty
     checks if a possition is valid ( in the grid)
-    
+
 
 Pieces
     Piece is initialized with position and colour
     Each piece inherits position and colour and has its own unique symbol
-    Added available moves for pieces: Pawn, Rook
+    Added available moves for pieces: Pawn, Rook (
+        for which I have to find a solution for them not to overstep ocupied positions)
+        I was thinking of doing this in the board, when it checks for available positions and slice from index 0 til position ocupied and only consider those
     
 
 Game 
