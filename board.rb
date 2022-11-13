@@ -11,6 +11,7 @@ class Board
         @grid[row][col] # but this is how the computer will read it
     end
 
+    # test
     def []=(pos, piece)
         #if people give intructions as [col, row], 
         #but computer acceses the position on the grid with [row][col]
