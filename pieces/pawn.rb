@@ -10,8 +10,8 @@ class Pawn < Piece
     end
 
     # returns an array of available moves
-    def available_moves
-        available_moves = forward_moves + side_attacks
+    def pawn_moves
+        pawn_moves = forward_moves + side_attacks
     end
     
 
@@ -92,18 +92,7 @@ class Pawn < Piece
     end
 
 
-    # def move_set(start_pos)
-    #     #move_set[0] is one_step
-    #     #move_set[1] is double step from start row
-    #     #move_set[2] is diagonal attack of rigth
-    #     #move_set[3] is diagonal attack of left
-    #     move_set = [
-    #         [1,0],
-    #         [2,0],
-    #         [1,1],
-    #         [1,-1]
-    #     ]
-    # end
+
 end
 
 

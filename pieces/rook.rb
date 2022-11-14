@@ -8,8 +8,8 @@ class Rook < Piece
 
     # Rook CAN'T step over other pieces
     # available moves need to be checked if empty, valid, or opposite colour
-    def available_moves
-        available_moves = horizontal_moves + vertical_moves
+    def rook_moves
+        rook_moves = horizontal_moves + vertical_moves
     end
 
     def move_horizontal # e.g. self.pos [5, 0]

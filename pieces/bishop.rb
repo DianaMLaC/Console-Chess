@@ -7,8 +7,8 @@ class Bishop < Piece
     end
     # Bishop CAN'T step over other pieces
     # available moves need to be checked if empty, valid, or opposite colour
-    def available_moves
-        available_moves = diagonal_left + diagonal_rigth
+    def bishop_moves
+        bishop_moves = diagonal_left + diagonal_right
     end
 
     def diagonal_left # self.pos [7,2]
@@ -25,17 +25,17 @@ class Bishop < Piece
         return diagonal_left
     end
 
-    def diagonal_rigth # self.pos [7,2]
-        diagonal_rigth = []
+    def diagonal_right # self.pos [7,2]
+        diagonal_right = []
         row, col = self.pos
         i = row
         j = col
         while (i < 8 && i >= 0) && (j < 8 && j >= 0)
             i + 1 * colour_dir
             j - 1 * colour_dir
-            diagonal_rigth << [i, j]
+            diagonal_right << [i, j]
         end
         
-        return diagonal_rigth
+        return diagonal_right
     end
 end

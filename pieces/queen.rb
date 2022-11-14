@@ -7,7 +7,7 @@ class Queen < Piece
     end
 
     def queen_moves
-        queen_moves = horizontal_moves + vertical_moves + diagonal_left + diagonal_rigth
+        queen_moves = horizontal_moves + vertical_moves + diagonal_left + diagonal_right
     end
 
     def move_horizontal # e.g. self.pos [5, 0]
@@ -44,17 +44,17 @@ class Queen < Piece
         return diagonal_left
     end
 
-    def diagonal_rigth # self.pos [7,2]
-        diagonal_rigth = []
+    def diagonal_right # self.pos [7,2]
+        diagonal_right = []
         row, col = self.pos
         i = row
         j = col
         while (i < 8 && i >= 0) && (j < 8 && j >= 0)
             i + 1 * colour_dir
             j - 1 * colour_dir
-            diagonal_rigth << [i, j]
+            diagonal_right << [i, j]
         end
-        return diagonal_rigth
+        return diagonal_right
     end
 
 
