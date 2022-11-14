@@ -9,7 +9,8 @@ class Pawn < Piece
         super(board, start_pos, colour, :P)
     end
 
-    # returns an array of available moves
+    # Pawn CAN'T step over other pieces
+    # available moves need to be checked if empty, valid, or opposite colour
     def pawn_moves
         pawn_moves = forward_moves + side_attacks
     end

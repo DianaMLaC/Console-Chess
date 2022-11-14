@@ -6,6 +6,9 @@ class King < Piece
         super(start_pos, colour, :K)
     end
 
+    # King CAN'T move in royall chess
+    # available moves need to be checked if empty, valid, or opposite colour
+
     def king_moves
         king_moves = straight_moves + diagonal_moves
     end

@@ -6,6 +6,9 @@ class Queen < Piece
         super(start_pos, colour, :Q)
     end
 
+    # Queen CAN'T step over other pieces
+    # available moves need to be checked if empty, valid, or opposite colour
+
     def queen_moves
         queen_moves = horizontal_moves + vertical_moves + diagonal_left + diagonal_right
     end
