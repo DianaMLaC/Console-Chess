@@ -21,3 +21,9 @@ what do I need for a pawn to move?
         end 
         return false 
     end
+
+
+How do I check the colour of the piece vs the colour of the specific piece
+is super.colour allowed?
+
+And can I use each on king_moves that returns an array? I should be able to
