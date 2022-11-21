@@ -1,33 +1,34 @@
 require_relative '../piece.rb'
 
 class Bishop < Piece
-
     def initialize(board, start_pos, colour)
         super(board, start_pos, colour, :B)
     end
     # Bishop CAN'T step over other pieces
     # available moves need to be checked if empty, valid, or opposite colour
     def available_moves
-        available_moves = []
-        self.bishop_moves.each do |position|   
-            if @board.pos_valid?(position)
-                if @board.is_empty?(position)
-                    available_moves << position 
-                end
+        bishop_available_moves = []
+        self.bishop_moves.each do |pos|   
+            piece_at_pos = @board[pos]
 
-                if self.valid_attack(position)
-                    available_moves << position
-                end 
+            if piece_at_pos == :NullPiece
+                bishop_available_moves << pos
+                next
             end
+
+            if piece_at_pos.colour == self.colour
+                next
+            end
+            bishop_available_moves << pos
         end
-        return available_moves
+        return bishop_available_moves
     end
     
-    private
     def bishop_moves
         bishop_moves = diagonal_left + diagonal_right
     end
-
+    
+    private
     def diagonal_left # self.pos [7,2]
         diagonal_left = []
         row, col = self.pos

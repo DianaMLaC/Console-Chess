@@ -1,11 +1,5 @@
 require_relative '../piece.rb'
 
-def sum(b, c)
-    return b + c
-end
-
-puts sum(5,6)
-
 class King < Piece
     def initialize(board, start_pos, colour)
         super(board, start_pos, colour, :K)  

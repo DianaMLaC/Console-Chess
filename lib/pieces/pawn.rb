@@ -1,11 +1,10 @@
 require_relative '../piece.rb'
 
 class Pawn < Piece
-    attr_reader :start_row, 
+    # attr_reader :start_row 
 
-    def initialize(board, start_pos, colour, symbol)
-        @board = board
-        @start_row = true
+    def initialize(board, start_pos, colour)
+        # @start_row = true
         super(board, start_pos, colour, :P)
     end
 
@@ -13,106 +12,84 @@ class Pawn < Piece
     # available moves need to be checked if empty, valid, or opposite colour
     
     def available_moves
-        available_moves = []
-        self.pawn_moves.each do |position|   
-            if @board.pos_valid?(position)
-                if @board.is_empty?(position)
-                    available_moves << position 
-                end
-
-                if self.valid_attack(position)
-                    available_moves << position
-                end 
+        pawn_available_moves = []
+        self.pawn_moves.each do |pos|   
+            piece_at_pos = @board[pos]
+           
+            if piece_at_pos == :NullPiece
+                pawn_available_moves << pos
+                next
             end
+            #HOW CAN WE CHECK AGAINST SIDE_ATTACKS?
+           
         end
-        return available_moves
+        return pawn_available_moves
     end
 
-    private
     
     def pawn_moves
-        pawn_moves = forward_moves + side_attacks
-    end
-    
-
-    # we also need to check if the possition is not out of the board 
-    # same as valid or ocuppied by opposite colour
-    # but we leave this here for now, as the pawn is different from other pieces in attack way ... TBC
-
-    def forward_moves # only if those pos is empty
-        if @board.is_empty?(self.pos) && @board.pos_valid?(self.pos)
-            forward_moves = []
-            row, col = self.pos #position at which the piece is on the board
-            
-            if at_start_row?
-                forward_moves << [row + colour_dir, col] 
-                forward_moves << [row + (2 * colour_dir), col]
-                @start_row = false
-    
-                return forward_moves
-            end
-    
-            new_row = row + colour_dir
-            new_pos = [new_row, col]
-            forward_moves << new_pos
-            
-            return forward_moves
-
-        end
+        pawn_moves = at_start_row + forward_moves # + side_attacks
     end
 
     def side_attacks
-         if @board.pos_valid(self.pos) #only if possition is ocupied by opposite colour
+        col, row = self.pos
+        pawn_attacks = []
 
-            pos_attack = []
-            row, col = self.pos
-    
-            if self.colour == :white
-                new_row = row + 1
-                new_col = col - 1
-                new_pos1 = [new_row, new_col]
-                
-                if @board[new_pos1].color == :black
-                    pos_attack << new_pos1
-                end
-                
-                new_col = col + 1
-                new_pos2 = [new_row, new_col]
-                
-                if @board[new_pos2].color == :black
-                    pos_attack << new_pos2
-                end
-                
-            end
-            
-            if self.colour == :black
-                new_row1 = row + 1
-                new_col1 = col - 1
-                new_pos1 = [new_row1, new_col1]
-                
-                if @board[new_pos1].color == :white
-                    pos_attack << new_pos1
-                end
-                
-                new_col2 = col + 1
-                new_pos2 = [new_row1, new_col2]
-                
-                if @board[new_pos2].color == :white
-                    pos_attack << new_pos2
-                end
-            end
-            return pos_attack
-         end
+        if self.colour == :white
+            pawn_attacks << [col - 1, row - 1]
+            pawn_attacks << [col + 1, row - 1]
+        end
+
+        if self.colour == :black
+            pawn_attacks << [col - 1, row + 1]
+            pawn_attacks << [col + 1, row + 1]
+        end
+        return pawn_attacks
+         
+    end
+
+    def start_row?
+        col, row = self.pos
+        if (self.colour == :white) && (row == 6)
+            return true
+        end
+
+        if (self.colour == :black) && (row == 1)
+            return true
+        end
+        return false
     end
     
     private
 
-    def at_start_row?
-        @start_row
+    def at_start_row
+        col, row = self.pos
+        start_row_moves = []
+
+        if self.start_row? && self.colour == :white
+            start_row_moves << [col, row - 2]
+        end
+
+        if self.start_row? && self.colour == :black
+            start_row_moves << [col, row + 2]
+        end
+
+        return start_row_moves
     end
 
+    def forward_moves # only if those pos is empty
+        col, row = self.pos
+        pawn_forward_moves = []
+        if self.colour == :white
+            pawn_forward_moves << [col, row - 1]
+        end
 
+        if self.colour == :black
+            pawn_forward_moves << [col, row + 1]
+        end
 
+        return pawn_forward_moves        
+    end
 end
 
 
