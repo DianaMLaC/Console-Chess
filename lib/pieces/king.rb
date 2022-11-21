@@ -17,9 +17,11 @@ class King < Piece
                 next
             end
 
+            # I don't get this ->
             if piece_at_pos.colour == self.colour
                 next
             end
+
 
             # TODO: test to see if pos would result in check
 

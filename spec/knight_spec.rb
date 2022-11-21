@@ -1,7 +1,7 @@
 require 'rspec'
 require 'pieces/knight'
 require 'board'
-#require 'pieces/ANOTHERPIECE'
+require 'pieces/pawn'
 
 
 
