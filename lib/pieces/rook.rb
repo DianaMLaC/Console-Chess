@@ -47,10 +47,10 @@ class Rook < Piece
         new_pos = [col, new_row]
 
         while @board.pos_on_the_board?(new_pos)
-            new_pos_piece = @board[new_pos]
+            new_piece = @board[new_pos]
 
-            if new_pos_piece != :NullPiece
-                if new_pos_piece.colour != self.colour
+            if new_piece != :NullPiece
+                if new_piece.colour != self.colour
                     vertical_moves << new_pos
                 end
                 break
