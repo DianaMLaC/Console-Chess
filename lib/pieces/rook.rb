@@ -2,40 +2,66 @@ require_relative '../piece.rb'
 
 class Rook < Piece
 
-    def initialize(board, start_pos, colour, symbol)
-        super(start_pos, colour, :R)
+    def initialize(board, start_pos, colour)
+        super(board,start_pos, colour, :R)
     end
 
-    # Rook CAN'T step over other pieces
-    # available moves need to be checked if empty, valid, or opposite colour
-    def rook_moves
-        rook_moves = horizontal_moves + vertical_moves
+
+    def available_moves
+        move_horizontal(-1) + move_horizontal(1) + move_vertical(1) + move_vertical(-1)
     end
 
-    def move_horizontal # e.g. self.pos [5, 0]
-            horizontal_moves = []
-            row, col = self.pos
-            i = col
-            while i < 8 && i >= 0
-                horizontal_moves << [row, col + (i * colour_dir)]
-                i + (1 * colour_dir)
+    def move_horizontal(dir)
+        col, row = self.pos
+        horizontal_moves = []
+        moves_counter = 1 * dir
+
+        new_col = col + moves_counter
+        new_pos = [new_col, row]
+        while @board.pos_on_the_board?(new_pos)
+            new_piece = @board[new_pos]
+
+            if new_piece != :NullPiece
+                if new_piece.colour != self.colour
+                    horizontal_moves << pos
+                end
+                break
             end
+            horizontal_moves << new_pos
+            
+            moves_counter += 1 * dir
+            new_col = col + moves_counter
+            new_pos = [new_col, row]
+        end
         return horizontal_moves
+
     end
 
-    def move_vertical
+
+    def move_vertical(dir)
+        col, row = self.pos
         vertical_moves = []
-        row, col = self.pos
-            i = row
-            while i < 8 && i >= 0
-                vertical_moves << [row + (i * colour_dir), col]
-                i + (1 * colour_dir)
+        moves_counter = 1 * dir
+
+        new_row = row + moves_counter
+        new_pos = [col, new_row]
+
+        while @board.pos_on_the_board?(new_pos)
+            new_pos_piece = @board[new_pos]
+
+            if new_pos_piece != :NullPiece
+                if new_pos_piece.colour != self.colour
+                    vertical_moves << new_pos
+                end
+                break
             end
+            vertical_moves << new_pos
+            moves_counter += 1 * dir
+            new_row = row + moves_counter 
+            new_pos = [col, new_row]
+        end
         return vertical_moves
     end
 
-    # def move_dirs
-    #     # we have an initial pos of [7,7] and we wanna slide with no one in our way to [7,4]
-    #     # 
-    # end
+
 end

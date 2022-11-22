@@ -19,19 +19,27 @@ class Pawn < Piece
             if piece_at_pos == :NullPiece
                 pawn_available_moves << pos
                 next
+            end#HOW CAN WE CHECK AGAINST diagonal_ATTACKS? 
+        end
+
+        self.diagonal_attacks.each do |pos|
+            piece_at_pos = @board[pos]
+
+            if piece_at_pos != :NullPiece 
+                if piece_at_pos.colour != self.colour
+                    pawn_available_moves << pos
+                end
             end
-            #HOW CAN WE CHECK AGAINST SIDE_ATTACKS?
-           
         end
         return pawn_available_moves
     end
 
     
     def pawn_moves
-        pawn_moves = at_start_row + forward_moves # + side_attacks
+        pawn_moves = at_start_row + forward_moves # + diagonal_attacks
     end
 
-    def side_attacks
+    def diagonal_attacks
         col, row = self.pos
         pawn_attacks = []
 

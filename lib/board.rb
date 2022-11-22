@@ -50,17 +50,15 @@ class Board
 
 
     
-    def pos_valid?(pos)
+    def pos_on_the_board?(pos)
         col, row = pos
-        
-        if row < 0 || row > 7
-            raise "Invalid position"
-            return false
-        end
-        if col < 0 || col > 7
-            raise "Invalid position"
-            return false
-        end
+        col.between?(0, 7) && row.between?(0, 7)
+        # if row < 0 || row > 7
+        #     return false
+        # end
+        # if col < 0 || col > 7
+        #     return false
+        # end
     end
     
     def move_piece(piece)
