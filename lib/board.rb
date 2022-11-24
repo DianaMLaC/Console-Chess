@@ -1,43 +1,44 @@
+require_relative 'pieces/bishop'
+require_relative 'pieces/king'
+require_relative 'pieces/knight'
+require_relative 'pieces/pawn'
+require_relative 'pieces/queen'
+require_relative 'pieces/rook'
+
+
+
 class Board
     def initialize
         # the board lookup should always be looked up [row][col]
         @game_array = Array.new(8) {Array.new(8, :NullPiece)}
+
     end
 
-    # syntactic sugar
+    # syntactic sugar for :
+    # def get_piece_at_pos(pos)
+    #     col, row = pos
+    #     return @game_array[row][col]
+    # end
     def [](pos)
         col, row = pos # [col, row] makes the position given by the player
         @game_array[row][col] # but this is how the computer will read it
     end
 
-    # syntactic sugar
-    def []=(pos, piece)
-        #if people give intructions as [col, row], 
-        #but computer acceses the position on the grid with [row][col]
-        #then we shoul set it like that
-        col, row = pos
-        @game_array[row][col] = piece 
-    end
-
-    # def get_piece_at_pos(pos)
-    #     col, row = pos
-    #     return @game_array[row][col]
-    # end
-
+    # syntactic sugar;
     # def set_piece_at_pos(pos, piece)
     #     col, row = pos
     #     @game_array[row][col] = piece
     # end
-
-    # WE need to place pieces on the board based on their colour position and piece like a human would
-    # let's start row by row
+    def []=(pos, piece)
+        col, row = pos
+        @game_array[row][col] = piece 
+    end
     
-    
-    def place_pieces # A function to place all pieces on the board
-        self.place_white_row()
-        self.place_black_row()
-        self.place_white_pawns()
-        self.place_black_pawns()
+    def place_pieces 
+        place_white_row()
+        place_black_row()
+        place_white_pawns()
+        place_black_pawns()
     end
     
     def is_empty?(pos)
@@ -48,29 +49,73 @@ class Board
         return true
     end
 
-
-    
     def pos_on_the_board?(pos)
         col, row = pos
         col.between?(0, 7) && row.between?(0, 7)
-        # if row < 0 || row > 7
-        #     return false
-        # end
-        # if col < 0 || col > 7
-        #     return false
-        # end
+       
     end
     
-    def move_piece(piece)
-        # we take the piece's available moves , and we check if each one:
-        # is empty
-        # checks if opposit colour for attack
-        # for pieces that cannot step over, we only consider positions from array  until those occupied
-        # is valid(on the board)
-        # and we only consider those that are as a possible move
+
+    def move_piece(start_pos, end_pos)
+        
+        s_col, s_row = start_pos
+        piece_to_move = @game_array[s_row][s_col]
+
+        e_col, e_row = end_pos
+        piece_dest = @game_array[e_row][e_col]
+
+        if piece_to_move == :NullPiece
+            raise "Invalid start position"
+        end
+
+        moves = piece_to_move.available_moves
+        if !moves.include?(end_pos)
+            raise "Invalid end position"
+        end
+
+        piece_to_move.pos = end_pos
+        @game_array[s_row][s_col] = :NullPiece
+        @game_array[e_row][e_col] = piece_to_move
+
+        return true
+    end
+
+    def display_border
+        lines =  "--|----|----|----|----|----|----|----|----|--"
+        puts lines
+    end
+
+    def display_separator(num)
+        spaces = "#{num} |"
+        (0..7).each do |col|
+            letter = get_symbol_at_pos([col,num])
+            extra_space = letter.length == 2 ? '' : ' '
+            spaces += " #{letter} #{extra_space}|"
+        end 
+        puts spaces
+    end
+
+       
+    def display_x_axis
+        puts "C/R  0    1    2    3    4    5    6    7    "
+    end
+
+    def dispay_grid_with_y_axis
+        display_x_axis
+        display_border
+        (0..7).each do |y|
+            display_separator(y)
+            display_border
+        end
     end
     
     private
+    
+    def get_symbol_at_pos(pos)
+        col, row = pos
+        piece = @game_array[row][col]
+        return piece == :NullPiece ? ' ' : piece.symbol
+    end
     
     def place_white_row
         Rook.new(self, [0,7], :white)
@@ -115,6 +160,42 @@ class Board
         Pawn.new(self, [6,1], :black)
         Pawn.new(self, [7,1], :black)
     end
+
+    # def place_null_pieces
+    #     NullPiece.new(self,[0,2])
+    #     NullPiece.new(self,[0,3])
+    #     NullPiece.new(self,[0,4])
+    #     NullPiece.new(self,[0,5])
+    #     NullPiece.new(self,[1,2])
+    #     NullPiece.new(self,[1,3])
+    #     NullPiece.new(self,[1,4])
+    #     NullPiece.new(self,[1,5])
+    #     NullPiece.new(self,[2,2])
+    #     NullPiece.new(self,[2,3])
+    #     NullPiece.new(self,[2,4])
+    #     NullPiece.new(self,[2,5])
+    #     NullPiece.new(self,[3,2])
+    #     NullPiece.new(self,[3,3])
+    #     NullPiece.new(self,[3,4])
+    #     NullPiece.new(self,[3,5])
+    #     NullPiece.new(self,[4,2])
+    #     NullPiece.new(self,[4,3])
+    #     NullPiece.new(self,[4,4])
+    #     NullPiece.new(self,[4,5])
+    #     NullPiece.new(self,[5,2])
+    #     NullPiece.new(self,[5,3])
+    #     NullPiece.new(self,[5,4])
+    #     NullPiece.new(self,[5,5])
+    #     NullPiece.new(self,[6,2])
+    #     NullPiece.new(self,[6,3])
+    #     NullPiece.new(self,[6,4])
+    #     NullPiece.new(self,[6,5])
+    #     NullPiece.new(self,[7,2])
+    #     NullPiece.new(self,[7,3])
+    #     NullPiece.new(self,[7,4])
+    #     NullPiece.new(self,[7,5])
+
+    # end
     
 
     

@@ -1,6 +1,7 @@
-require_relative '../piece.rb'
+require_relative './piece.rb'
 
 class Bishop < Piece
+
     def initialize(board, start_pos, colour)
         super(board, start_pos, colour, :B)
     end

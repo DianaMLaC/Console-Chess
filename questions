@@ -26,4 +26,13 @@ what do I need for a pawn to move?
 How do I check the colour of the piece vs the colour of the specific piece
 is super.colour allowed?
 
-And can I use each on king_moves that returns an array? I should be able to
+
+In order for a piece to move we need:
+ * its moves - done
+ * the position to which to move:
+    - we are getting the possition from the player as the input in the terminal or cursor?( how even to do that?) PLAYER
+    - we are checkin the possition given from the list of that pieces available moves -BOARD/ GAME
+    - we place the piece in the said position -BOARD
+        - if it takes an opposite colour piece that piece disapears from the board into the current players potofolio -BOARD/GAME/PLAYER
+    - we set the position where the piece was as :NullPiece -BOARD
+    - we set the turn to the next player - GAME/PLAYER

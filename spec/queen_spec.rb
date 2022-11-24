@@ -1,6 +1,6 @@
 require 'rspec'
-require 'pieces/queen'
 require 'board'
+require 'pieces/queen'
 require 'pieces/pawn'
 require 'pieces/king'
 require 'pieces/bishop'

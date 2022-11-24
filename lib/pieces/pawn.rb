@@ -1,7 +1,6 @@
-require_relative '../piece.rb'
+require_relative './piece.rb'
 
 class Pawn < Piece
-    # attr_reader :start_row 
 
     def initialize(board, start_pos, colour)
         # @start_row = true
