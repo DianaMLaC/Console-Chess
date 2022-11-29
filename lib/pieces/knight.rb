@@ -10,23 +10,20 @@ class Knight < Piece
     # available moves need to be checked if empty, valid, or opposite colour
     
     def available_moves
-        available_moves = []
-        self.knight_moves.each do |pos|   
+        knight_available_moves = []
+        knight_moves.each do |pos|   
             piece_at_pos = @board[pos]
             if piece_at_pos == :NullPiece
-                available_moves << pos
+                knight_available_moves << pos
                 next
             end
 
             if piece_at_pos.colour != self.colour
-                available_moves << pos
+                knight_available_moves << pos
             end
 
-            
-
-          
         end
-        return available_moves
+        return knight_available_moves
     end
     
     def knight_moves
@@ -39,7 +36,8 @@ class Knight < Piece
         knight_total_moves << up_right_two
         knight_total_moves << down_right_one 
         knight_total_moves << down_right_two
-        return knight_total_moves
+
+        return knight_total_moves.select{ |pos| @board.pos_on_the_board?(pos) }
     end
 
     def up_left_one
@@ -47,7 +45,8 @@ class Knight < Piece
 
         new_row = row - 2
         new_col = col - 1
-        up_left_one_move = [new_col, new_row]  
+
+        return [new_col, new_row]
     end
 
     def up_left_two
@@ -56,8 +55,7 @@ class Knight < Piece
         new_row = row - 1
         new_col = col - 2
         
-        up_left_two_move = [new_col, new_row]  
-
+        return [new_col, new_row]  
     end
 
     def down_left_one
@@ -66,8 +64,7 @@ class Knight < Piece
         new_row = row + 1
         new_col = col - 2
         
-        down_left_one_move = [new_col, new_row] 
-
+        return [new_col, new_row] 
     end
 
     def down_left_two
@@ -76,8 +73,7 @@ class Knight < Piece
         new_row = row + 2
         new_col = col + 1
         
-        down_left_two_move = [new_col, new_row] 
-
+        return [new_col, new_row] 
     end
 
     def up_right_one
@@ -86,8 +82,7 @@ class Knight < Piece
         new_row = row - 1
         new_col = col + 2
         
-        up_right_one_move = [new_col, new_row] 
-
+        return [new_col, new_row] 
     end
 
     def up_right_two
@@ -96,7 +91,7 @@ class Knight < Piece
         new_row = row - 2
         new_col = col + 1
         
-        up_right_two_move = [new_col, new_row] 
+        return [new_col, new_row] 
     end
 
     def down_right_one
@@ -105,7 +100,7 @@ class Knight < Piece
         new_row = row + 2
         new_col = col - 1
         
-        down_right_one_move = [new_col, new_row] 
+        return [new_col, new_row] 
     end
 
     def down_right_two
@@ -114,7 +109,7 @@ class Knight < Piece
         new_row = row + 1
         new_col = col + 2
         
-        down_right_two_move = [new_col, new_row] 
+        return [new_col, new_row] 
     end
 
 end

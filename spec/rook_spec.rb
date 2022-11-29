@@ -25,6 +25,15 @@ describe Rook do
             [0,4],[1,4],[2,4],[3,4],[4,4],[6,4],[7,4]
         ])
     end
+
+    it "can move freely if nothing on its path - part 2" do
+        rook = Rook.new(a_board, [3,5], :white)
+
+        expect(rook.available_moves).to match_array([
+            [3,0],[3,1],[3,2],[3,3],[3,4],[3,6],[3,7],
+            [0,5],[1,5],[2,5],[4,5],[5,5],[6,5],[7,5]
+        ])
+    end
     
     it "cannot move past its own pieces" do
         rook = Rook.new(a_board, [5,4], :white)

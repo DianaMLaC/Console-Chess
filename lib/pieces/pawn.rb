@@ -25,7 +25,7 @@ class Pawn < Piece
             piece_at_pos = @board[pos]
 
             if piece_at_pos != :NullPiece 
-                if piece_at_pos.colour != self.colour
+                if piece_at_pos.colour != @colour
                     pawn_available_moves << pos
                 end
             end
@@ -36,6 +36,7 @@ class Pawn < Piece
     
     def pawn_moves
         pawn_moves = at_start_row + forward_moves # + diagonal_attacks
+        pawn_moves.select { |pos| @board.pos_on_the_board?(pos)}
     end
 
     def diagonal_attacks
@@ -51,7 +52,7 @@ class Pawn < Piece
             pawn_attacks << [col - 1, row + 1]
             pawn_attacks << [col + 1, row + 1]
         end
-        return pawn_attacks
+        return pawn_attacks.select { |pos| @board.pos_on_the_board?(pos)}
          
     end
 

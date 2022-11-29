@@ -13,6 +13,14 @@ describe Knight do
             knight = Knight.new(a_board, [1,7], :white)
             expect(knight.pos).to eq([1,7])
         end
+    end 
+
+    it "can move freely if nothing in its path" do
+        knight = Knight.new(a_board, [7,6], :black)
+        
+        expect(knight.available_moves).to match_array([
+            [6,4],[5,5],[5,7]
+        ])
     end
     
    
@@ -40,5 +48,11 @@ describe Knight do
         expect(knight.available_moves).to match_array([
             [4,2],[1,3],[1,5],[2,6],[4,6],[5,3],[5,5]
         ])
+    end
+
+    it "does not move off the board" do 
+        knight = Knight.new(a_board, [7,7], :white)
+
+        expect(knight.available_moves).to match_array([[6,5],[5,6]])
     end
 end

@@ -10,36 +10,51 @@ class King < Piece
     # available moves need to be checked if empty, valid, or opposite colour
     def available_moves
         king_available_moves = []
-        self.king_moves.each do |pos|
-            piece_at_pos = @board[pos]
 
+        king_moves.each do |pos|
+            if enemies_moves.include?(pos)
+                next
+            end
+
+            piece_at_pos = @board[pos]
             if piece_at_pos == :NullPiece
                 king_available_moves << pos
                 next
             end
 
-            # I don't get this ->
-            if piece_at_pos.colour == self.colour
+            if piece_at_pos.colour == @colour 
                 next
             end
 
-
-            # TODO: test to see if pos would result in check
-
             king_available_moves << pos
-
         end
-        return king_available_moves
-        # another_position = [5,4]
-        # @board.is_empty?(another_position)
-        # piece_at_another_position = @board[another_position]
-        # piece_at_another_position.colour != self.colour
 
+        return king_available_moves
     end
 
 
     def king_moves
-        return straight_moves + diagonal_moves
+        knight_total_moves = straight_moves + diagonal_moves
+        return knight_total_moves.select { |pos| @board.pos_on_the_board?(pos)}
+    end
+
+
+    def enemies_moves
+        all_pieces = @board.pieces_on_the_board
+        kings_enemies = all_pieces.select {|piece| piece.colour != @colour}
+
+        moves_of_enemies = []
+
+        kings_enemies.each do |enemy|
+            if enemy.symbol == :P
+                moves_of_enemies += enemy.diagonal_attacks
+                next
+            end
+
+            moves_of_enemies += enemy.available_moves
+        end
+
+        return moves_of_enemies
     end
 
     private
@@ -47,11 +62,11 @@ class King < Piece
     def straight_moves
         col, row = self.pos
         king_straight_moves = []
-        king_straight_moves << [row, col - 1] #horizontal_left
-        king_straight_moves << [row, col + 1] #horizontal_right
+        king_straight_moves << [col, row - 1] #horizontal_left
+        king_straight_moves << [col, row + 1] #horizontal_right
 
-        king_straight_moves << [row - 1, col] #vertical_up
-        king_straight_moves << [row + 1, col] #vertical_down
+        king_straight_moves << [col - 1, row] #vertical_up
+        king_straight_moves << [col + 1, row] #vertical_down
 
         return king_straight_moves
     end
@@ -59,11 +74,11 @@ class King < Piece
     def diagonal_moves
         col, row = self.pos
         king_diagonal_moves = []
-        king_diagonal_moves << [row - 1, col - 1] #diagonal_left_up
-        king_diagonal_moves << [row + 1, col - 1] #diagonal_left_up
+        king_diagonal_moves << [col - 1, row - 1] #diagonal_left_up
+        king_diagonal_moves << [col + 1, row - 1] #diagonal_left_up
 
-        king_diagonal_moves << [row - 1, col + 1] #diagonal_right_up
-        king_diagonal_moves << [row + 1, col + 1] #diagonal_right_down
+        king_diagonal_moves << [col - 1, row + 1] #diagonal_right_up
+        king_diagonal_moves << [col + 1, row + 1] #diagonal_right_down
 
         return king_diagonal_moves
     end

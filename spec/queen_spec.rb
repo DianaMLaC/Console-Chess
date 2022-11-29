@@ -30,6 +30,17 @@ describe Queen do
         ])
     end
 
+    it "can move freely if nothing on its path - part 2" do
+        queen = Queen.new(a_board, [3,5], :black)
+
+        expect(queen.available_moves).to match_array([
+            [3,4],[3,3],[3,2],[3,1],[3,0],[3,6],[3,7],
+            [1,7],[2,6],[4,4],[5,3],[6,2],[7,1],
+            [0,2],[1,3],[2,4],[4,6],[5,7],[0,5],[1,5],[2,5],[4,5],[5,5],[6,5],[7,5]
+        ])
+    
+    end
+
     it "cannot move past its own pieces" do
         queen = Queen.new(a_board, [5,4], :white)
         king = King.new(a_board, [5,6], :white)

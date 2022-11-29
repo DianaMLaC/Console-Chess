@@ -45,5 +45,11 @@ describe Pawn do
 
         expect(pawn.available_moves).to match_array([])
     end
+
+    it "cannot move off the board" do 
+        pawn = Pawn.new(a_board,[6,7], :black)
+
+        expect(pawn.available_moves).to match_array([])
+    end
     
 end

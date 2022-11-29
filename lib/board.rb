@@ -10,28 +10,28 @@ require_relative 'pieces/rook'
 class Board
     def initialize
         # the board lookup should always be looked up [row][col]
-        @game_array = Array.new(8) {Array.new(8, :NullPiece)}
+        @grid = Array.new(8) {Array.new(8, :NullPiece)}
 
     end
 
     # syntactic sugar for :
     # def get_piece_at_pos(pos)
     #     col, row = pos
-    #     return @game_array[row][col]
+    #     return @grid[row][col]
     # end
     def [](pos)
         col, row = pos # [col, row] makes the position given by the player
-        @game_array[row][col] # but this is how the computer will read it
+        @grid[row][col] # but this is how the computer will read it
     end
 
     # syntactic sugar;
     # def set_piece_at_pos(pos, piece)
     #     col, row = pos
-    #     @game_array[row][col] = piece
+    #     @grid[row][col] = piece
     # end
     def []=(pos, piece)
         col, row = pos
-        @game_array[row][col] = piece 
+        @grid[row][col] = piece 
     end
     
     def place_pieces 
@@ -43,7 +43,7 @@ class Board
     
     def is_empty?(pos)
         col, row = pos
-        if @game_array[row][col] != :NullPiece
+        if @grid[row][col] != :NullPiece
             return false
         end
         return true
@@ -57,12 +57,11 @@ class Board
     
 
     def move_piece(start_pos, end_pos)
-        
         s_col, s_row = start_pos
-        piece_to_move = @game_array[s_row][s_col]
+        piece_to_move = @grid[s_row][s_col]
 
         e_col, e_row = end_pos
-        piece_dest = @game_array[e_row][e_col]
+        piece_dest = @grid[e_row][e_col]
 
         if piece_to_move == :NullPiece
             raise "Invalid start position"
@@ -74,11 +73,12 @@ class Board
         end
 
         piece_to_move.pos = end_pos
-        @game_array[s_row][s_col] = :NullPiece
-        @game_array[e_row][e_col] = piece_to_move
+        @grid[s_row][s_col] = :NullPiece
+        @grid[e_row][e_col] = piece_to_move
 
-        return true
+        return nil
     end
+
 
     def display_border
         lines =  "--|----|----|----|----|----|----|----|----|--"
@@ -109,13 +109,31 @@ class Board
         end
     end
     
-    private
     
+    def pieces_on_the_board 
+        result = []
+        for row in 0..7 do
+            for col in 0..7 do
+                # c, r = pos
+                piece = self[[col,row]]
+                if piece != :NullPiece
+                    result << piece
+                end
+            end
+        end
+        result
+    end
+
+
+    
+    private
     def get_symbol_at_pos(pos)
         col, row = pos
-        piece = @game_array[row][col]
+        piece = @grid[row][col]
         return piece == :NullPiece ? ' ' : piece.symbol
     end
+    
+
     
     def place_white_row
         Rook.new(self, [0,7], :white)
