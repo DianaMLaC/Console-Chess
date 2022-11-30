@@ -120,7 +120,17 @@ describe Board do
         a_board.move_piece([6,1],[6,3])
         a_board.move_piece([3,7],[7,3])
 
-        expect(a_board.checkmate?(:black)).to eq(:true)
+        expect(a_board.checkmate?(:black)).to eq(true)
+    end
+
+    it "checks if king in check" do
+        king = King.new(a_board, [4,5], :white)
+        queen = Queen.new(a_board, [3,5], :black)
+        bishop = Bishop.new(a_board, [4,3], :white)
+
+        expect(a_board.pieces_on_the_board).to match_array([king, queen, bishop])
+
+        expect(a_board.in_check?(:white)).to eq(true)
     end
 
 end

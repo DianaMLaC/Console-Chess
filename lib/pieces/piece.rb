@@ -17,18 +17,22 @@ class Piece
         self.colour == :white ? -1 : 1 
     end
 
-    def valid_moves(moves)
+    def valid_moves
         result = []
-        moves.each do |move|
+        available_moves().each do |move|
             if !move_into_check?(move)
                 result << move
             end
         end
-        result
+        return result
         # return moves.select {|move| !move_into_check?(move)}
         
         #filters out the moves of a piece that will leave the player in check
 
+    end
+
+    def available_moves
+        raise "To implemented by subclass"
     end
 
     def move_into_check?(end_pos)
@@ -37,7 +41,7 @@ class Piece
         new_board.move_piece(@pos, end_pos)
         
         #2 on the duplicated board use the method in_check to see if the player is in check
-        new_board.in_check?(@colour)
+        return new_board.in_check?(@colour)
         #returns true if the end_pos will move our player into check
     end
     

@@ -77,4 +77,12 @@ describe Queen do
 
         expect(queen.available_moves).to match_array([])
     end
+
+    it "has correct available moves" do
+        king = King.new(a_board, [4,5], :white)
+        queen = Queen.new(a_board, [3,5], :black)
+        bishop = Bishop.new(a_board, [4,3], :white)
+
+        expect(queen.available_moves).to include([4,5])
+    end
 end

@@ -51,14 +51,29 @@ class Board
 
     def in_check?(colour)
         king = pieces_on_the_board.select { |piece| piece.colour == colour && piece.symbol == :K }.first
-        return king.enemies_moves.include?(king.pos)
+        moves_of_enemies = []
+        kings_enemies = pieces_on_the_board.select {|piece| piece.colour != colour}
+
+        kings_enemies.each do |enemy| 
+            if enemy.symbol == :P 
+                moves_of_enemies += enemy.available_moves
+                next
+            end
+            moves_of_enemies += enemy.available_moves
+        end
+
+        return moves_of_enemies.include?(king.pos)  
     end
 
     def checkmate?(colour)
         pieces = pieces_on_the_board.select {|piece| piece.colour == colour}
         pieces_available_moves = pieces.inject([]) do |acc, piece|
-            return acc + piece.valid_moves(piece.available_moves) #?????
+            # if piece.symbol == :K &&
+            acc + piece.valid_moves
+            # end
+            # acc + piece.valid_moves(piece.available_moves) #????? what if we just use piece.available_moves
         end
+
         if in_check?(colour) && pieces_available_moves.empty? # valid_moves
             return true
         end

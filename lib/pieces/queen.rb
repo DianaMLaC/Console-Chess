@@ -14,7 +14,7 @@ class Queen < Piece
     end
 
     def move_horizontal(dir)
-        col, row = self.pos
+        col, row = @pos
         horizontal_moves = []
         moves_counter = 1 * dir
 
@@ -24,8 +24,8 @@ class Queen < Piece
             new_piece = @board[new_pos]
 
             if new_piece != :NullPiece
-                if new_piece.colour != self.colour
-                    horizontal_moves << pos
+                if new_piece.colour != @colour
+                    horizontal_moves << new_pos
                 end
                 break
             end
@@ -41,7 +41,7 @@ class Queen < Piece
 
 
     def move_vertical(dir)
-        col, row = self.pos
+        col, row = @pos
         vertical_moves = []
         moves_counter = 1 * dir
 
@@ -52,7 +52,7 @@ class Queen < Piece
             new_piece = @board[new_pos]
 
             if new_piece != :NullPiece
-                if new_piece.colour != self.colour
+                if new_piece.colour != @colour
                     vertical_moves << new_pos
                 end
                 break
@@ -66,7 +66,7 @@ class Queen < Piece
     end
 
     def diagonal_left_up # self.pos [7,2]
-        col, row = self.pos
+        col, row = @pos
         left_up_moves = []
         up_left = - 1
 
@@ -78,7 +78,7 @@ class Queen < Piece
             new_piece = @board[new_pos]
 
             if new_piece != :NullPiece
-                if new_piece.colour != self.colour
+                if new_piece.colour != @colour
                     left_up_moves << new_pos
                 end
                 break
@@ -98,7 +98,7 @@ class Queen < Piece
     end
 
     def diagonal_left_down
-        col, row = self.pos
+        col, row = @pos
         left_down_moves = []
         down_left = 1
 
@@ -110,7 +110,7 @@ class Queen < Piece
             new_piece = @board[new_pos]
 
             if new_piece != :NullPiece
-                if new_piece.colour != self.colour
+                if new_piece.colour != @colour
                     left_down_moves << new_pos
                 end
                 break
@@ -127,7 +127,7 @@ class Queen < Piece
     end
 
     def diagonal_right_up  # self.pos [7,2]
-        col, row = self.pos
+        col, row = @pos
         diagonal_up_right = []
         up_right = 1
 
@@ -139,7 +139,7 @@ class Queen < Piece
             new_piece = @board[new_pos]
 
             if new_piece != :NullPiece
-                if new_piece.colour != self.colour
+                if new_piece.colour != @colour
                     diagonal_up_right << new_pos
                 end
                 break
@@ -156,7 +156,7 @@ class Queen < Piece
     end
 
     def diagonal_right_down
-        col, row = self.pos
+        col, row = @pos
         diagonal_up_down = []
         down_right = 1
 
@@ -168,7 +168,7 @@ class Queen < Piece
             new_piece = @board[new_pos]
 
             if new_piece != :NullPiece
-                if new_piece.colour != self.colour
+                if new_piece.colour != @colour
                     diagonal_up_down << new_pos
                 end
                 break

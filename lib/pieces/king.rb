@@ -12,9 +12,9 @@ class King < Piece
         king_available_moves = []
 
         king_moves.each do |pos|
-            if enemies_moves.include?(pos)
-                next
-            end
+            # if enemies_moves.include?(pos)
+            #     next
+            # end
 
             piece_at_pos = @board[pos]
             if piece_at_pos == :NullPiece
@@ -34,28 +34,31 @@ class King < Piece
 
 
     def king_moves
-        knight_total_moves = straight_moves + diagonal_moves
-        return knight_total_moves.select { |pos| @board.pos_on_the_board?(pos)}
+        king_total_moves = straight_moves + diagonal_moves
+        return king_total_moves.select { |pos| @board.pos_on_the_board?(pos)}
     end
 
 
-    def enemies_moves
-        all_pieces = @board.pieces_on_the_board
-        kings_enemies = all_pieces.select {|piece| piece.colour != @colour}
+    # def enemies_moves
+    #     all_pieces = @board.pieces_on_the_board
+    #     kings_enemies = all_pieces.select {|piece| piece.colour != @colour}
 
-        moves_of_enemies = []
+    #     moves_of_enemies = []
 
-        kings_enemies.each do |enemy|
-            if enemy.symbol == :P
-                moves_of_enemies += enemy.diagonal_attacks
-                next
-            end
+    #     kings_enemies.each do |enemy|
+    #         if enemy.symbol == :P
+    #             moves_of_enemies += enemy.diagonal_attacks
+    #             next
+    #         end
+    #         # if enemy.symbol == :K 
+    #         #     next
+    #         # end
 
-            moves_of_enemies += enemy.available_moves
-        end
+    #         moves_of_enemies += enemy.available_moves
+    #     end
 
-        return moves_of_enemies
-    end
+    #     return moves_of_enemies
+    # end
 
     private
 

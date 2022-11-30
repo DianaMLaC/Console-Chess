@@ -45,25 +45,7 @@ describe King do
     
     end
     
-    it "contains moves in check" do
-        king = King.new(a_board, [5,4], :white)
-        queen = Queen.new(a_board, [3, 5], :black)
-        moves = king.available_moves
-    end
 
-    it "checks enemy moves" do
-        king = King.new(a_board, [5,4], :white)
-        queen = Queen.new(a_board, [3,5], :black)
-        knight = Knight.new(a_board,[7,6], :black)
-
-        expect(king.enemies_moves).to match_array([
-            [3,4],[3,3],[3,2],[3,1],[3,0],[3,6],[3,7],
-            [1,7],[2,6],[4,4],[5,3],[6,2],[7,1],
-            [0,2],[1,3],[2,4],[4,6],[5,7],
-            [0,5],[1,5],[2,5],[4,5],[5,5],[6,5],[7,5],
-            [6,4],[5,5],[5,7]
-        ])
-    end
 
     # it "checks enemy moves - part 2" do
     #     king = King.new(a_board, [5,4], :white)
@@ -84,9 +66,8 @@ describe King do
         king = King.new(a_board, [5,4], :white)
         queen = Queen.new(a_board, [3,5], :black)
         bishop = Bishop.new(a_board, [4,3], :white)
-        moves = king.available_moves
 
-        expect(moves).to match_array([[6,3],[6,4]])
+        expect(king.valid_moves).to match_array([[6,3],[6,4]])
         
     end
 
@@ -96,7 +77,7 @@ describe King do
         pawn2 = Pawn.new(a_board, [3,2], :black)
         pawn3 = Pawn.new(a_board, [6,2], :black)
 
-        expect(king.available_moves).to match_array([[3,3],[3,5],[4,5],[5,5]])
+        expect(king.valid_moves).to match_array([[3,3],[3,5],[4,5],[5,5]])
         
     end
 
