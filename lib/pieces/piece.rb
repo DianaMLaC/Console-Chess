@@ -38,7 +38,7 @@ class Piece
     def move_into_check?(end_pos)
         #1 duplicate the board on which to perform the move
         new_board = @board.duplicate()
-        new_board.move_piece(@pos, end_pos)
+        new_board.move_piece!(@pos, end_pos)
         
         #2 on the duplicated board use the method in_check to see if the player is in check
         return new_board.in_check?(@colour)

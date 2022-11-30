@@ -34,7 +34,8 @@ describe Board do
     end
 
     it "moves the piece" do
-        queen = Queen.new(a_board, [5,4], :while)
+        king = King.new(a_board, [4,2], :white)
+        queen = Queen.new(a_board, [5,4], :white)
         expect(a_board[[3,4]]).to eq(:NullPiece)
 
         a_board.move_piece([5,4], [3,4])
@@ -81,6 +82,7 @@ describe Board do
     it "checks the duplicate board" do 
         king = King.new(a_board, [5,3], :black)
         queen = Queen.new(a_board, [7,4], :white)
+        white_king = King.new(a_board, [0,0], :white)
         expect(a_board[[5,3]]).to eq(king)
         expect(a_board[[7,4]]).to eq(queen)
         

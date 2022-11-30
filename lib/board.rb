@@ -62,7 +62,7 @@ class Board
             moves_of_enemies += enemy.available_moves
         end
 
-        return moves_of_enemies.include?(king.pos)  
+        return moves_of_enemies.include?(king.pos)
     end
 
     def checkmate?(colour)
@@ -127,11 +127,13 @@ class Board
 
         if piece_to_move == :NullPiece
             raise "Invalid start position"
+            #Ask for different start position
         end
 
-        moves = piece_to_move.available_moves
+        moves = piece_to_move.valid_moves
         if !moves.include?(end_pos)
             raise "Invalid end position"
+            #Ask for diferent end position
         end
 
         piece_to_move.pos = end_pos
@@ -139,6 +141,18 @@ class Board
         @grid[e_row][e_col] = piece_to_move
 
         return nil
+    end
+
+    def move_piece!(start_pos, end_pos)
+        s_col, s_row = start_pos
+        piece_to_move = @grid[s_row][s_col]
+
+        e_col, e_row = end_pos
+        piece_dest = @grid[e_row][e_col]
+
+        piece_to_move.pos = end_pos
+        @grid[s_row][s_col] = :NullPiece
+        @grid[e_row][e_col] = piece_to_move
     end
 
 
