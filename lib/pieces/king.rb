@@ -63,7 +63,7 @@ class King < Piece
     private
 
     def straight_moves
-        col, row = self.pos
+        col, row = @pos
         king_straight_moves = []
         king_straight_moves << [col, row - 1] #horizontal_left
         king_straight_moves << [col, row + 1] #horizontal_right
@@ -75,7 +75,7 @@ class King < Piece
     end
 
     def diagonal_moves
-        col, row = self.pos
+        col, row = @pos
         king_diagonal_moves = []
         king_diagonal_moves << [col - 1, row - 1] #diagonal_left_up
         king_diagonal_moves << [col + 1, row - 1] #diagonal_left_up

@@ -55,10 +55,10 @@ class Board
         kings_enemies = pieces_on_the_board.select {|piece| piece.colour != colour}
 
         kings_enemies.each do |enemy| 
-            if enemy.symbol == :P 
-                moves_of_enemies += enemy.available_moves
-                next
-            end
+            # if enemy.symbol == :P 
+            #     moves_of_enemies += enemy.available_moves
+            #     next
+            # end
             moves_of_enemies += enemy.available_moves
         end
 
@@ -109,7 +109,7 @@ class Board
         for row in 0..7 do
             for col in 0..7 do
                 # c, r = pos
-                piece = self[[col,row]]
+                piece = self[[col,row]] ##### IS IT BETTER TO PUT GRID HERE?
                 if piece != :NullPiece
                     result << piece
                 end

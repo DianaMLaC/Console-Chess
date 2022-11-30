@@ -133,4 +133,19 @@ describe Board do
         expect(a_board.in_check?(:white)).to eq(true)
     end
 
+    it "checks if king in check by pawn moving forward" do
+        king = King.new(a_board, [5,4], :white)
+        queen = Queen.new(a_board, [3,5], :black)
+        pawn = Pawn.new(a_board, [5,3], :black)
+
+        expect(a_board.in_check?(:white)).to eq(false)
+    end
+
+    it "checks if king in check by pawn moving diagonally" do
+        king = King.new(a_board, [5,4], :white)
+        queen = Queen.new(a_board, [3,5], :black)
+        pawn = Pawn.new(a_board, [4,3], :black)
+
+        expect(a_board.in_check?(:white)).to eq(true)
+    end
 end

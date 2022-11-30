@@ -18,7 +18,7 @@ class Knight < Piece
                 next
             end
 
-            if piece_at_pos.colour != self.colour
+            if piece_at_pos.colour != @colour
                 knight_available_moves << pos
             end
 
@@ -41,7 +41,7 @@ class Knight < Piece
     end
 
     def up_left_one
-        col, row = self.pos
+        col, row = @pos
 
         new_row = row - 2
         new_col = col - 1
@@ -50,7 +50,7 @@ class Knight < Piece
     end
 
     def up_left_two
-        col, row = self.pos
+        col, row = @pos
         
         new_row = row - 1
         new_col = col - 2
@@ -59,7 +59,7 @@ class Knight < Piece
     end
 
     def down_left_one
-        col, row = self.pos
+        col, row = @pos
 
         new_row = row + 1
         new_col = col - 2
@@ -68,7 +68,7 @@ class Knight < Piece
     end
 
     def down_left_two
-        col, row = self.pos
+        col, row = @pos
         
         new_row = row + 2
         new_col = col + 1
@@ -77,7 +77,7 @@ class Knight < Piece
     end
 
     def up_right_one
-        col, row = self.pos
+        col, row = @pos
 
         new_row = row - 1
         new_col = col + 2
@@ -86,7 +86,7 @@ class Knight < Piece
     end
 
     def up_right_two
-        col, row = self.pos
+        col, row = @pos
         
         new_row = row - 2
         new_col = col + 1
@@ -95,7 +95,7 @@ class Knight < Piece
     end
 
     def down_right_one
-        col, row = self.pos
+        col, row = @pos
 
         new_row = row + 2
         new_col = col - 1
@@ -104,7 +104,7 @@ class Knight < Piece
     end
 
     def down_right_two
-        col, row = self.pos
+        col, row = @pos
         
         new_row = row + 1
         new_col = col + 2

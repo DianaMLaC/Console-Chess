@@ -12,7 +12,7 @@ class Pawn < Piece
     
     def available_moves
         pawn_available_moves = []
-        self.pawn_moves.each do |pos|   
+        pawn_moves.each do |pos|   
             piece_at_pos = @board[pos]
            
             if piece_at_pos == :NullPiece
@@ -21,7 +21,7 @@ class Pawn < Piece
             end#HOW CAN WE CHECK AGAINST diagonal_ATTACKS? 
         end
 
-        self.diagonal_attacks.each do |pos|
+        diagonal_attacks.each do |pos|
             piece_at_pos = @board[pos]
 
             if piece_at_pos != :NullPiece 
@@ -40,15 +40,15 @@ class Pawn < Piece
     end
 
     def diagonal_attacks
-        col, row = self.pos
+        col, row = @pos
         pawn_attacks = []
 
-        if self.colour == :white
+        if @colour == :white
             pawn_attacks << [col - 1, row - 1]
             pawn_attacks << [col + 1, row - 1]
         end
 
-        if self.colour == :black
+        if @colour == :black
             pawn_attacks << [col - 1, row + 1]
             pawn_attacks << [col + 1, row + 1]
         end
@@ -57,12 +57,12 @@ class Pawn < Piece
     end
 
     def start_row?
-        col, row = self.pos
-        if (self.colour == :white) && (row == 6)
+        col, row = @pos
+        if (@colour == :white) && (row == 6)
             return true
         end
 
-        if (self.colour == :black) && (row == 1)
+        if (@colour == :black) && (row == 1)
             return true
         end
         return false
@@ -71,14 +71,14 @@ class Pawn < Piece
     private
 
     def at_start_row
-        col, row = self.pos
+        col, row = @pos
         start_row_moves = []
 
-        if self.start_row? && self.colour == :white
+        if start_row? && @colour == :white
             start_row_moves << [col, row - 2]
         end
 
-        if self.start_row? && self.colour == :black
+        if start_row? && @colour == :black
             start_row_moves << [col, row + 2]
         end
 
@@ -86,13 +86,13 @@ class Pawn < Piece
     end
 
     def forward_moves # only if those pos is empty
-        col, row = self.pos
+        col, row = @pos
         pawn_forward_moves = []
-        if self.colour == :white
+        if @colour == :white
             pawn_forward_moves << [col, row - 1]
         end
 
-        if self.colour == :black
+        if @colour == :black
             pawn_forward_moves << [col, row + 1]
         end
 

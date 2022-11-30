@@ -14,7 +14,7 @@ class Piece
     end
 
     def colour_dir
-        self.colour == :white ? -1 : 1 
+        @colour == :white ? -1 : 1 
     end
 
     def valid_moves

@@ -12,7 +12,7 @@ class Rook < Piece
     end
 
     def move_horizontal(dir)
-        col, row = self.pos
+        col, row = @pos
         horizontal_moves = []
         moves_counter = 1 * dir
 
@@ -22,7 +22,7 @@ class Rook < Piece
             new_piece = @board[new_pos]
 
             if new_piece != :NullPiece
-                if new_piece.colour != self.colour
+                if new_piece.colour != @colour
                     horizontal_moves << pos
                 end
                 break
@@ -50,7 +50,7 @@ class Rook < Piece
             new_piece = @board[new_pos]
 
             if new_piece != :NullPiece
-                if new_piece.colour != self.colour
+                if new_piece.colour != @colour
                     vertical_moves << new_pos
                 end
                 break
