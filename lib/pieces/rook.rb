@@ -39,7 +39,7 @@ class Rook < Piece
 
 
     def move_vertical(dir)
-        col, row = self.pos
+        col, row = @pos
         vertical_moves = []
         moves_counter = 1 * dir
 

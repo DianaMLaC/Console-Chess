@@ -6,12 +6,20 @@ require_relative 'pieces/queen'
 require_relative 'pieces/rook'
 
 
+# old_board = Board.new()
+# queen = Queen.new(old_board, [3,7], :white)
+# duplicate_queen = Queen.new(new_board, [3,7], :white)
+
+# new_board = Board.new(old_board)
+# new_board.move_piece([[3,7],[1,7]])
 
 class Board
-    def initialize
-        # the board lookup should always be looked up [row][col]
-        @grid = Array.new(8) {Array.new(8, :NullPiece)}
 
+    def initialize
+        # if we don't pass anything, we will create a board as before
+        @grid = Array.new(8) {Array.new(8, :NullPiece)} 
+        # if we do pass in other_board, other_board will be nil
+        
     end
 
     # syntactic sugar for :
@@ -40,6 +48,32 @@ class Board
         place_white_pawns()
         place_black_pawns()
     end
+
+    def in_check?(colour)
+        king = pieces_on_the_board.select { |piece| piece.colour == colour && piece.symbol == :K }.first
+        return king.enemies_moves.include?(king.pos)
+    end
+
+    def checkmate?(colour)
+        pieces = pieces_on_the_board.select {|piece| piece.colour == colour}
+        pieces_available_moves = pieces.inject([]) do |acc, piece|
+            return acc + piece.valid_moves(piece.available_moves) #?????
+        end
+        if in_check?(colour) && pieces_available_moves.empty? # valid_moves
+            return true
+        end
+
+        return false
+    end
+
+    def duplicate 
+        new_board = Board.new()
+        pieces = pieces_on_the_board.each do |piece|
+            new_piece = piece.class.new(new_board, piece.pos, piece.colour)
+        end
+        return new_board
+        
+    end
     
     def is_empty?(pos)
         col, row = pos
@@ -55,6 +89,19 @@ class Board
        
     end
     
+    def pieces_on_the_board 
+        result = []
+        for row in 0..7 do
+            for col in 0..7 do
+                # c, r = pos
+                piece = self[[col,row]]
+                if piece != :NullPiece
+                    result << piece
+                end
+            end
+        end
+        result
+    end
 
     def move_piece(start_pos, end_pos)
         s_col, s_row = start_pos
@@ -110,19 +157,6 @@ class Board
     end
     
     
-    def pieces_on_the_board 
-        result = []
-        for row in 0..7 do
-            for col in 0..7 do
-                # c, r = pos
-                piece = self[[col,row]]
-                if piece != :NullPiece
-                    result << piece
-                end
-            end
-        end
-        result
-    end
 
 
     

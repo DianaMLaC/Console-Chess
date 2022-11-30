@@ -1,95 +1,73 @@
-require_relative 'board'
+require_relative 'cursor'
+require 'colorize'
 
-class Display  
+# require 'whatever' OR I write it below
+# class Whatever
+#   def pos_on_the_board?(pos)
+#     return true
+#   end
+# end
+
+# a_whatever = Whatever.new
+
+
+class Display 
+    attr_reader :cursor
 
     def initialize(board)
         @board = board 
+        @cursor = Cursor.new([0,0], board)
+        # @cursor = Cursor.new([0,0], a_whatever)
     end
 
     
+    def display_border
+        lines =  "--|----|----|----|----|----|----|----|----|--"
+        puts lines
+    end
 
-        # puts "col  0    1    2    3    4    5    6    7    "
-        # puts "--|----|----|----|----|----|----|----|----|--"
-        # puts "0 |    |    |    |    |    |    |    |    |  "
-        # puts "--|----|----|----|----|----|----|----|----|--"
-        # puts "1 |    |    |    |    |    |    |    |    |  "
-        # puts "--|----|----|----|----|----|----|----|----|--"
-        # puts "2 |    |    |    |    |    |    |    |    |  "
-        # puts "--|----|----|----|----|----|----|----|----|--"
-        # puts "3 |    |    |    |    |    |    |    |    |  "
-        # puts "--|----|----|----|----|----|----|----|----|--"
-        # puts "4 |    |    |    |    |    |    |    |    |  "
-        # puts "--|----|----|----|----|----|----|----|----|--"
-        # puts "5 |    |    |    |    |    |    |    |    |  "
-        # puts "--|----|----|----|----|----|----|----|----|--"
-        # puts "6 |    |    |    |    |    |    |    |    |  "
-        # puts "--|----|----|----|----|----|----|----|----|--"
-        # puts "7 |    |    |    |    |    |    |    |    |  "
-        # puts "--|----|----|----|----|----|----|----|----|--"
-        
+    def display_row(row)
+        result = "#{row} |"
 
+        (0..7).each do |col|
+            cursor_pos = @cursor.cursor_pos
+            letter = get_symbol_at_pos([col,row])
 
-        # one box is:
+            # if [col, row] == cursor_pos
+            if col == cursor_pos[0] && row == cursor_pos[1]
+                bg = @cursor.selected ? :red : :blue
+                letter = letter.to_s.colorize(:background => bg)
+            end
 
-        # puts 9.times(lines)  "--|--"
-        # puts 9.times(spaces) "  |  "
-
-        # 8 times we replace the spaces last character with the symbol
-        # 8 times we replace the spaces first character with numbers from range (0..7)
-
-
-        # pieces white symbols are:
-        # rook: ♖
-        # knight: ♘
-        # bishop: ♗
-        # queen: ♕
-        # king: ♔
-        # pawn: ♙
-
-        # pieces black symbols are:
-        # rook: ♜
-        # knight: ♞
-        # bishop: ♝
-        # queen: ♛
-        # king: ♚
-#         # pawn: ♟
-#     def display_border
-#         lines =  "--|----|----|----|----|----|----|----|----|--"
-#         puts lines
-#     end
-
-#     def display_separator(num)
-#         spaces = "#{num} |"
-#         (0..7).each do |col|
-#             letter = get_symbol_at_pos([col,num])
-#             extra_space = letter.length == 2 ? '' : ' '
-#             spaces += " #{letter} #{extra_space}|"
-#         end
-#         # spaces =  "#{num} | #{@board.get_symbol_at_pos([0,num])}  | #{@board.get_symbol_at_pos([1,num])}  | #{@board.get_symbol_at_pos([2,num])}  | #{@board.get_symbol_at_pos([3,num])}  |    |    |    |    |  "  
-#         puts spaces
-#     end
+            extra_space = letter.length == 2 ? '' : ' '
+            result += " #{letter} #{extra_space}|"
+        end
+        # result =  "#{row} | #{@board.get_symbol_at_pos([0,row])}  | #{@board.get_symbol_at_pos([1,row])}  | #{@board.get_symbol_at_pos([2,row])}  | #{@board.get_symbol_at_pos([3,row])}  |    |    |    |    |  "  
+        puts result
+    end
 
        
-#     def display_x_axis
-#         puts "C/R  0    1    2    3    4    5    6    7    "
-#     end
+    def display_x_axis
+        puts "C/R  0    1    2    3    4    5    6    7    "
+    end
+  
+    def render
+        puts `clear`
+        display_x_axis
+        display_border
+        (0..7).each do |row|
+            display_row(row)
+            display_border
+        end
+    end
 
-#     def dispay_grid_with_y_axis
-#         display_x_axis
-#         display_border
-#         (0..7).each do |y|
-#             display_separator(y)
-#             display_border
-#         end
-#     end
+    private
 
-#     private
-
-#     def get_symbol_at_pos(pos)
-#         piece = @board[pos]
-#         return piece == :NullPiece ? ' ' : piece.symbol
-#     end
-# end
+    def get_symbol_at_pos(pos)
+        piece = @board[pos]
+        return piece == :NullPiece ? ' ' : piece.symbol
+    end
+end
 
 # a_board = Board.new()
 # a_display = Display.new(a_board)

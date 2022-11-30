@@ -1,5 +1,6 @@
 require "io/console"
 
+
 KEYMAP = {
   " " => :space,
   "h" => :left,
@@ -23,6 +24,11 @@ KEYMAP = {
   "\u0003" => :ctrl_c,
 }
 
+# MOVES = { # same as below
+#   :left => [0, -1],
+#   :right => [0,1]
+# }
+
 MOVES = {
   left: [0, -1],
   right: [0, 1],
@@ -31,12 +37,12 @@ MOVES = {
 }
 
 class Cursor
-
-  attr_reader :cursor_pos, :board
+  attr_reader :cursor_pos, :board, :selected
 
   def initialize(cursor_pos, board)
     @cursor_pos = cursor_pos
     @board = board
+    @selected = false
   end
 
   def get_input
@@ -76,8 +82,42 @@ class Cursor
   end
 
   def handle_key(key)
+    # if key == :return || key == :space || key == :enter
+    if [:return, :space].include?(key)
+      toggle_selected()
+      return @cursor_pos
+    end
+  
+    if [:left, :right, :up, :down].include?(key)
+      update_pos(MOVES[key])
+      return nil
+    end
+
+    if key == :ctrl_c
+      Process.exit(0)
+    end
+
+    # case key
+    # when :return, :space
+    #   return @cursor_pos
+    # when :left, :right, :up, :down
+    #   update_pos(MOVES[key])
+    #   return nil
+    # when :ctrl_c
+    #   Process.exit(0)
+    # end
+  end
+
+  def toggle_selected
+    @selected = !@selected
+
   end
 
   def update_pos(diff)
+    new_pos = [@cursor_pos[0] + diff[1], @cursor_pos[1] + diff[0]]
+    
+    if @board.pos_on_the_board?(new_pos)
+      @cursor_pos = new_pos
+    end
   end
 end
