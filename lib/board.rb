@@ -5,6 +5,8 @@ require_relative 'pieces/pawn'
 require_relative 'pieces/queen'
 require_relative 'pieces/rook'
 
+require_relative 'constants'
+
 
 # old_board = Board.new()
 # queen = Queen.new(old_board, [3,7], :white)
@@ -17,7 +19,7 @@ class Board
 
     def initialize
         # if we don't pass anything, we will create a board as before
-        @grid = Array.new(8) {Array.new(8, :NullPiece)} 
+        @grid = Array.new(8) {Array.new(8, NULL_PIECE)} 
         # if we do pass in other_board, other_board will be nil
         
     end
@@ -92,7 +94,7 @@ class Board
     
     def is_empty?(pos)
         col, row = pos
-        if @grid[row][col] != :NullPiece
+        if @grid[row][col] != NULL_PIECE
             return false
         end
         return true
@@ -110,7 +112,7 @@ class Board
             for col in 0..7 do
                 # c, r = pos
                 piece = self[[col,row]] ##### IS IT BETTER TO PUT GRID HERE?
-                if piece != :NullPiece
+                if piece != NULL_PIECE
                     result << piece
                 end
             end
@@ -125,7 +127,7 @@ class Board
         e_col, e_row = end_pos
         piece_dest = @grid[e_row][e_col]
 
-        if piece_to_move == :NullPiece
+        if piece_to_move == NULL_PIECE
             raise "Invalid start position"
             #Ask for different start position
         end
@@ -137,7 +139,7 @@ class Board
         end
 
         piece_to_move.pos = end_pos
-        @grid[s_row][s_col] = :NullPiece
+        @grid[s_row][s_col] = NULL_PIECE
         @grid[e_row][e_col] = piece_to_move
 
         return nil
@@ -151,7 +153,7 @@ class Board
         piece_dest = @grid[e_row][e_col]
 
         piece_to_move.pos = end_pos
-        @grid[s_row][s_col] = :NullPiece
+        @grid[s_row][s_col] = NULL_PIECE
         @grid[e_row][e_col] = piece_to_move
     end
 
@@ -193,7 +195,7 @@ class Board
     def get_symbol_at_pos(pos)
         col, row = pos
         piece = @grid[row][col]
-        return piece == :NullPiece ? ' ' : piece.symbol
+        return piece == NULL_PIECE ? ' ' : piece.symbol
     end
     
 

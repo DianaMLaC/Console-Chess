@@ -1,41 +1,58 @@
+require_relative 'player'
+require_relative 'display'
+require_relative 'board'
+require_relative 'constants'
+
+
 class Game 
-    attr_accessor :moves_history #can I even put a method to be accesed on different classes?
-    def initialize(player, board)
-        @player = Player.new
-        @board = Board.place_pieces
+    
+    def initialize
+        @board = Board.new
+        
+        @display = Display.new(@board)
+        
+        @player1 = HumanPlayer.new(:white, @display)
+        @player2 = HumanPlayer.new(:black, @display)
+        
+        @curent_turn = @player1
+    end
+    
+    def play 
+        
+        @board.place_pieces
+   
+        while !@board.checkmate?(@curent_turn.colour)
+            
+            start_pos = @curent_turn.make_move
+            piece = @board[start_pos]
+
+            while piece == NULL_PIECE || (piece.colour != @curent_turn.colour)
+                start_pos = @curent_turn.make_move
+                piece = @board[start_pos]
+            end
+
+            end_pos = @curent_turn.make_move
+
+            begin
+                @board.move_piece(start_pos, end_pos)
+            rescue
+                next
+            end
+            @display.render
+            alternate
+        end
+
+        puts "Checkmate. Game over"
     end
 
-    def moves_history(Piece, colour, start_pos, end_pos)
-        if :R 
-            rook_moves = []
-            rook_moves.push([Piece, colour, start_pos, end_pos])
-            return rook_moves
+    def alternate
+        if @curent_turn == @player1
+            @curent_turn = @player2 
+        else 
+            @curent_turn = @player1
         end
-        if :B 
-            bishop_moves = []
-            bishop_moves.push([Piece, colour, start_pos, end_pos])
-            return bishop_moves
-        end
-        if :Kn 
-            knight_moves = []
-            knight_moves.push([Piece, colour, start_pos, end_pos])
-            return knight_moves
-        end
-        if :Q 
-            queen_moves = []
-            queen_moves.push([Piece, colour, start_pos, end_pos])
-            return queen_moves
-        end
-        if :K
-            king_moves = []
-            king_moves.push([Piece, colour, start_pos, end_pos])
-            return king_moves
-        end
-        if :P 
-            pawn_moves = []
-            pawn_moves.push([Piece, colour, start_pos, end_pos])
-            return pawn_moves
-        end
-        
     end
+
+
+
 end

@@ -32,7 +32,7 @@ class Piece
     end
 
     def available_moves
-        raise "To implemented by subclass"
+        raise "To be implemented by subclass"
     end
 
     def move_into_check?(end_pos)
