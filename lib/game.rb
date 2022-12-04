@@ -3,9 +3,7 @@ require_relative 'display'
 require_relative 'board'
 require_relative 'constants'
 
-
-class Game 
-    
+class Game
     def initialize
         @board = Board.new
         
@@ -38,6 +36,7 @@ class Game
             rescue
                 next
             end
+
             @display.render
             alternate
         end
@@ -52,7 +51,4 @@ class Game
             @curent_turn = @player1
         end
     end
-
-
-
 end
