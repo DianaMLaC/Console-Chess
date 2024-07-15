@@ -4,51 +4,50 @@ require_relative 'board'
 require_relative 'constants'
 
 class Game
-    def initialize
-        @board = Board.new
-        
-        @display = Display.new(@board)
-        
-        @player1 = HumanPlayer.new(:white, @display)
-        @player2 = HumanPlayer.new(:black, @display)
-        
-        @curent_turn = @player1
-    end
-    
-    def play 
-        
-        @board.place_pieces
-   
-        while !@board.checkmate?(@curent_turn.colour)
-            
-            start_pos = @curent_turn.make_move
-            piece = @board[start_pos]
+  def initialize
+    @board = Board.new
 
-            while piece == NULL_PIECE || (piece.colour != @curent_turn.colour)
-                start_pos = @curent_turn.make_move
-                piece = @board[start_pos]
-            end
+    @display = Display.new(@board)
 
-            end_pos = @curent_turn.make_move
+    @player1 = HumanPlayer.new(:white, @display)
+    @player2 = HumanPlayer.new(:black, @display)
 
-            begin
-                @board.move_piece(start_pos, end_pos)
-            rescue
-                next
-            end
+    @curent_turn = @player1
+  end
 
-            @display.render
-            alternate
-        end
+  def play
+    @board.place_pieces
 
-        puts "Checkmate. Game over"
+    until @board.checkmate?(@curent_turn.colour)
+
+      start_pos = @curent_turn.make_move
+      piece = @board[start_pos]
+
+      while piece == NULL_PIECE || (piece.colour != @curent_turn.colour)
+        start_pos = @curent_turn.make_move
+        piece = @board[start_pos]
+      end
+
+      end_pos = @curent_turn.make_move
+
+      begin
+        @board.move_piece(start_pos, end_pos)
+      rescue StandardError
+        next
+      end
+
+      @display.render
+      alternate
     end
 
-    def alternate
-        if @curent_turn == @player1
-            @curent_turn = @player2 
-        else 
-            @curent_turn = @player1
-        end
-    end
+    puts 'Checkmate. Game over'
+  end
+
+  def alternate
+    @curent_turn = if @curent_turn == @player1
+                     @player2
+                   else
+                     @player1
+                   end
+  end
 end
