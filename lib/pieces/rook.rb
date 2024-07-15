@@ -2,7 +2,8 @@ require_relative './piece'
 
 class Rook < Piece
   def initialize(board, start_pos, colour)
-    super(board, start_pos, colour, :R)
+    symbol = colour == :white ? '♖' : '♜'
+    super(board, start_pos, colour, symbol)
   end
 
   def available_moves

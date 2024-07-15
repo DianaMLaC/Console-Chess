@@ -29,7 +29,7 @@ class Board
   end
 
   def in_check?(colour)
-    king = pieces_on_the_board.select { |piece| piece.colour == colour && piece.symbol == :K }.first
+    king = pieces_on_the_board.select { |piece| piece.colour == colour && piece.symbol == '♔' }.first
     moves_of_enemies = []
     kings_enemies = pieces_on_the_board.reject { |piece| piece.colour == colour }
 

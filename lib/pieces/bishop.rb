@@ -2,7 +2,7 @@ require_relative './piece'
 
 class Bishop < Piece
   def initialize(board, start_pos, colour)
-    super(board, start_pos, colour, :B)
+    super(board, start_pos, colour, '♗')
   end
 
   def available_moves

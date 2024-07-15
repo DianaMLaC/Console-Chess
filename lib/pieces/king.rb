@@ -2,7 +2,7 @@ require_relative './piece'
 
 class King < Piece
   def initialize(board, start_pos, colour)
-    super(board, start_pos, colour, :K)
+    super(board, start_pos, colour, '♔')
   end
 
   def available_moves
